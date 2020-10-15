@@ -7,7 +7,7 @@ metadata:
 spec:
   containers:
   - name: app
-    image: myoungmediero/app:latest
+    image: jseoane/slpocapp:latest
     command: ['python', 'main.py']
     ports:
     - containerPort: 8000
