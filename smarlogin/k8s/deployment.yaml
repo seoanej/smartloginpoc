@@ -5,7 +5,7 @@ metadata:
   labels:
     app: app
 spec:
-  replicas: 10
+  replicas: 4
   selector:
     matchLabels:
       app: app
@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: app
-        image: myoungmediero/app:latest
+        image: jseoane/slpocapp:latest
         ports:
         - containerPort: 8000
