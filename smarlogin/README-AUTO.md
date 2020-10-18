@@ -69,12 +69,21 @@ La imagen empujada a docker hub is la que Kubernetes necesita bajar cuando se es
 >> minikube dashboard &> dashboard.out &
 >> cd ../k8s
 >> kubectl apply -f deployment.yaml
->> kubectl apply -f service.yaml 
+>> kubectl apply -f service.yaml
+>> minikube tunnel &> tunnel.out &
 >> kubectl get deploy app
 >> kubectl get pods
+>> kubectl get svc app-service
+>> minikube service app-service
 ```
-Si todo fue bien, el ultimo comando demuestra los dos ultimos comandos demuestran los detalles del despliego y lista 2 pods.
+Si todo fue bien, se despliega la application en dos pods en un contenedor en cada uno. Tambien se habilita un distribuidor de cardo (loadbalancer) y se able la applicación en el navegador.
 
+- verificamos que la application funciona y que metricas se estan exponiendo:
+
+```console
+http://<app-service external IP>/
+http://<app-service external IP>/metrics
+```
  
 
 

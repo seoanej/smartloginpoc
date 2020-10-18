@@ -13,18 +13,21 @@ _INF = float("inf")
 
 graphs = {}
 graphs['c'] = Counter('slpocapp_request_operations_total',
-                      'The total number of processed requests')
+                      'The total number of processed requests',
+                      ['namespace', 'pod'])
 graphs['h'] = Histogram('slpocapp_request_duration_seconds',
-                        'Histogram for the duration in seconds.', buckets=(1, 2, 5, 6, 10, _INF))
+                        'Histogram for the duration in seconds.', ['namespace', 'pod'], buckets=(1, 2, 5, 6, 10, _INF))
 
 
 async def handle_view(request):
     start = time.time()
-    graphs['c'].inc()
+#     graphs['c'].inc()
     output = socket.getfqdn()
 #     time.sleep(0.600)
     end = time.time()
-    graphs['h'].observe(end - start)
+    graphs['c'].labels(namespace='default', pod=output).inc()
+    graphs['h'].labels(namespace='default', pod=output).observe(end - start)
+#     graphs['h'].observe(end - start)
     output = str(output) + ' ' + "processing time: " + str(end)
     return web.json_response({"Respuesta de:": output})
 
