@@ -1,0 +1,25 @@
+prometheus:
+  url: http://10.99.145.65
+  port: 9090
+  
+rbac:
+  create: true
+  
+serviceAccount:
+  create: true
+
+rules:
+  default: false
+  custom:
+  - seriesQuery: '{__name__=~"^slpocapp_.*",namespace!="",pod!=""}'
+    resources:
+      overrides:
+        namespace:
+          resource: namespace
+        pod:
+          resource: pod
+    name:
+      matches: "^(.*)_total"
+      as: "slpocapp_request_operations_per_second"
+    metricsQuery: (sum(rate(<<.Series>>{<<.LabelMatchers>>}[2m])) by (<<.GroupBy>>))
+      
