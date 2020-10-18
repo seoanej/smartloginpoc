@@ -10,8 +10,8 @@ spec:
     kind: Deployment
     name: app
   # autoscale between 1 and 10 replicas
-  minReplicas: 1
-  maxReplicas: 5
+  minReplicas: 2
+  maxReplicas: 6
   metrics:
   # use a "Pods" metric, which takes the average of the
   # given metric across all pods controlled by the autoscaling target
@@ -21,4 +21,4 @@ spec:
       metricName: slpocapp_request_operations_per_second
       # target 500 milli-requests per second,
       # which is 1 request every two seconds
-      targetAverageValue: 500m
+      targetAverageValue: 2000m
